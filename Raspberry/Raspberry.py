@@ -26,7 +26,7 @@ while True:
     wiringpi.digitalWrite(20, 0)
     id = reader.read_id()
     payload = {"id": hex(id)}
-    r = requests.post("http://192.168.178.21:5000/checkID", json=payload)
+    r = requests.post("http://{}:5000/checkID".format(sys.argv[1]), json=payload)
 
     if r.status_code == 200:
         permissions = json.loads(r.text)
@@ -50,7 +50,7 @@ while True:
                     if fach in mypermissions:
                         print("Opening door " + str(fach))
                         wiringpi.digitalWrite(16, 1)
-                        rb.switchon(fach)
+                       	rb.switchon(fach)
                         time.sleep(1)
                         rb.switchoff(fach)
                         break
